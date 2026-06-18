@@ -3,7 +3,6 @@
 <head>
   <title>RW5 Fitness</title>
 
-  <!-- Your styles stay intact -->
   <style>
     body {
       font-family: Arial;
@@ -44,96 +43,42 @@
       cursor: pointer;
     }
   </style>
-<div id="dashboard" style="display:none;">
-  <h2>Welcome to your dashboard</h2>
-  <p>You are logged in 🎉</p>
-</div>
-  <!-- Supabase -->
-  
+
+  <!-- Supabase CDN -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
 
-  <!-- YOUR BRAND HEADER -->
-  <header>
-    RW5 Fitness
-  </header>
+<header>RW5 Fitness</header>
 
-  <div class="container">
+<div class="container">
 
-    <h2>Welcome to RW5 Fitness</h2>
-    <p>Your transformation starts here.</p>
+  <h2>Welcome to RW5 Fitness</h2>
+  <p>Your transformation starts here.</p>
 
-async function login() {
-  const email = document.getElementById("email").value
-  const password = document.getElementById("password").value
+  <div class="login-box">
+    <input id="email" placeholder="Email" />
+    <input id="password" type="password" placeholder="Password" />
 
-  const { data, error } = await supabaseClient.auth.signInWithPassword({
-    email,
-    password
-  })
+    <button onclick="signup()">Sign Up</button>
+    <button onclick="login()">Login</button>
 
-  if (error) {
-    document.getElementById("status").innerText = error.message
-  } else {
-    document.getElementById("status").innerText = "Logged in!"
-
-    // 👇 show dashboard
-    document.querySelector(".login-box").style.display = "none"
-    document.getElementById("dashboard").style.display = "block"
-  }
-}
-    <div id="dashboard" style="display:none;">
-  <h2>Welcome to your dashboard</h2>
-  <p>You are logged in 🎉</p>
-</div>
-      <p id="status"></p>
-    </div>
-
+    <p id="status"></p>
   </div>
 
-  
-    const supabaseUrl = "https://nqhubqwvxjchokweunbj.supabase.co"
-    const supabaseKey = "sb_publishable_vzlxSC1LygR5QdH18CCd0A_lfuZZkML"
+  <div id="dashboard" style="display:none;">
+    <h2>Welcome to your dashboard</h2>
+    <p>You are logged in 🎉</p>
+  </div>
 
-    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
-
-    async function signup() {
-      const email = document.getElementById("email").value
-      const password = document.getElementById("password").value
-
-      const { error } = await supabase.auth.signUp({
-        email,
-        password
-      })
-
-      document.getElementById("status").innerText =
-        error ? error.message : "Check your email to confirm signup"
-    }
-
-    async function login() {
-      const email = document.getElementById("email").value
-      const password = document.getElementById("password").value
-
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password
-      })
-
-      if (error) {
-        document.getElementById("status").innerText = error.message
-      } else {
-        document.getElementById("status").innerText = "Logged in!"
-      }
-    }
- <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</div>
 
 <script>
   const supabaseUrl = "https://nqhubqwvxjchokweunbj.supabase.co"
-  const supabaseKey = "sb_publishable_vzlxSC1LygR5QdH18CCd0A_lfuZZkML"
+  const supabaseKey = "YOUR_ANON_KEY"
 
-  const { createClient } = supabase
-  const supabaseClient = createClient(supabaseUrl, supabaseKey)
+  const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
 
   async function signup() {
     const email = document.getElementById("email").value
@@ -145,7 +90,7 @@ async function login() {
     })
 
     document.getElementById("status").innerText =
-      error ? error.message : "Signup successful"
+      error ? error.message : "Check your email to confirm signup"
   }
 
   async function login() {
@@ -157,8 +102,14 @@ async function login() {
       password
     })
 
-    document.getElementById("status").innerText =
-      error ? error.message : "Logged in!"
+    if (error) {
+      document.getElementById("status").innerText = error.message
+    } else {
+      document.getElementById("status").innerText = "Logged in!"
+
+      document.querySelector(".login-box").style.display = "none"
+      document.getElementById("dashboard").style.display = "block"
+    }
   }
 </script>
 
