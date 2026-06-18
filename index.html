@@ -46,7 +46,7 @@
   </style>
 
   <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
 </head>
 
 <body>
@@ -76,7 +76,7 @@
 
   </div>
 
-  <script>
+  
     const supabaseUrl = "https://nqhubqwvxjchokweunbj.supabase.co"
     const supabaseKey = "sb_publishable_vzlxSC1LygR5QdH18CCd0A_lfuZZkML"
 
@@ -110,7 +110,41 @@
         document.getElementById("status").innerText = "Logged in!"
       }
     }
-  </script>
+ <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+<script>
+  const supabaseUrl = "https://nqhubqwvxjchokweunbj.supabase.co"
+  const supabaseKey = "sb_publishable_vzlxSC1LygR5QdH18CCd0A_lfuZZkML"
+
+  const { createClient } = supabase
+  const supabaseClient = createClient(supabaseUrl, supabaseKey)
+
+  async function signup() {
+    const email = document.getElementById("email").value
+    const password = document.getElementById("password").value
+
+    const { error } = await supabaseClient.auth.signUp({
+      email,
+      password
+    })
+
+    document.getElementById("status").innerText =
+      error ? error.message : "Signup successful"
+  }
+
+  async function login() {
+    const email = document.getElementById("email").value
+    const password = document.getElementById("password").value
+
+    const { error } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    })
+
+    document.getElementById("status").innerText =
+      error ? error.message : "Logged in!"
+  }
+</script>
 
 </body>
 </html>
